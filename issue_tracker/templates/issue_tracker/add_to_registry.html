@@ -3,6 +3,7 @@
 {% block heading %}Add GitHub repository URL to add to registry{% endblock %}
 {% block logo_class %}fas fa-plus{% endblock %}
 {% block content %}
+<p class="mb-4">Add GitHub repositories to your Issue Registry for tracking number of issues.</p>
 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100" action="/api/validate_url" method="post">{% csrf_token %}
             <div class="input-group">
               <input type="url" id="input_url" name="input_url" class="form-control bg-light border-0 small" placeholder="Input Repository URL" aria-label="Add" aria-describedby="Add URL" data-validation="url" pattern="^(?:http)s?:\/\/(?:github\.com)\/[a-zA-Z0-9._-]*\/[a-zA-Z0-9._-]*$" oninvalid="setCustomValidity('Please input a valid GitHub URL')" onchange="try{setCustomValidity('')}catch(e){}" required autocomplete="off">
