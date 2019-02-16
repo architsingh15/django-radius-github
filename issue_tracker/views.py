@@ -5,10 +5,11 @@ from issue_tracker.models import Registry
 from issue_tracker.utils import _extract_username_repository_name, _get_issues_data, _count_required_issues, \
     _render_error_page
 
+# segregate the scripts and links according to the pages
 regex_ = '^(?:http)s?:\/\/(?:github\.com)\/[a-z]*\/[a-z]*$'
 
 # pass constants from view to template
-
+# add loading spinner in submit button
 
 def base(request):
     return render(request, 'issue_tracker/base.html', {})
@@ -32,7 +33,16 @@ def validate_url(request):
                 username, repository_name = _extract_username_repository_name(split_input_url)
                 issues = _get_issues_data(username, repository_name)
                 required_count = _count_required_issues(issues)
-                print(required_count)
+                registry_obj = Registry(
+                    username=username,
+                    repository_name=repository_name,
+                    total=required_count['total'],
+                    last_24_hours=required_count['less_than_24_hours'],
+                    between_1_and_7_days=required_count['less_than_7_days'],
+                    more_than_7_days=required_count['more_than_7_days'],
+                )
+                registry_obj.save()
+
                 return redirect('/add')
             else:
                 return _render_error_page('invalid_github', request)
@@ -45,3 +55,7 @@ def validate_url(request):
 def issue_registry(request):
     issues = Registry.objects.all()
     return render(request, 'issue_tracker/issue_registry.html', {'show_download_button': True, 'issues': issues})
+
+# create a custom loading page
+def dashboard(request):
+    return render(request, 'issue_tracker/dashboard.html')

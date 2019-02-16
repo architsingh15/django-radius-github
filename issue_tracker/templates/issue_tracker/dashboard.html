@@ -1,0 +1,11 @@
+{% extends 'issue_tracker/base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock%}
+{% block logo_class %}fab fa-github-square{% endblock %}
+{% block content %}
+<div class="text-center">
+            <p class="lead text-gray-800 mb-1"style="font-size:5rem;">Issue Tracker</p>
+            <p class="text-gray-500 mb-1">Track your GitHub repositories for number of issues, by user or by repository name</p>
+            <a href="/add">Add to Registry →</a>
+          </div>
+{% endblock %}
