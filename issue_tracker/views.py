@@ -1,14 +1,12 @@
 import requests
 from django.shortcuts import render, redirect
-from django.template.response import TemplateResponse
+
+from issue_tracker.utils import _extract_username_repository_name, _get_issues_data, _count_required_issues, \
+    _render_error_page
 
 regex_ = '^(?:http)s?:\/\/(?:github\.com)\/[a-z]*\/[a-z]*$'
 
 # pass constants from view to template
-
-
-def _render_error_page(error_name_html, request):
-    return TemplateResponse(request, 'issue_tracker/errors/{}.html'.format(error_name_html))
 
 
 def base(request):
@@ -26,15 +24,18 @@ def add_to_registry(request):
 def validate_url(request):
     if request.method == 'POST':
         input_url = request.POST.get('input_url')
-        split_input_url = input_url.split('/')
-        if len(split_input_url) is 5:
-            repository_name = split_input_url[-1]
-            username = split_input_url[-2]
-            # call the git hub API here with timestamp
-            print(repository_name)
-            print(username)
-            return redirect('/add')
+        resolvable_url = requests.get(input_url)
+        if resolvable_url.status_code is 200:
+            split_input_url = input_url.split('/')
+            if len(split_input_url) is 5:
+                username, repository_name = _extract_username_repository_name(split_input_url)
+                issues = _get_issues_data(username, repository_name)
+                required_count = _count_required_issues(issues)
+                print(required_count)
+                return redirect('/add')
+            else:
+                return _render_error_page('invalid_github', request)
         else:
-            return _render_error_page('invalid_github', request)
+            return _render_error_page('private_github_repo_invalid', request)
     else:
         return _render_error_page('403', request)
