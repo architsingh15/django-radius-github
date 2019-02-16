@@ -39,3 +39,7 @@ def validate_url(request):
             return _render_error_page('private_github_repo_invalid', request)
     else:
         return _render_error_page('403', request)
+
+
+def issue_registry(request):
+    return render(request, 'issue_tracker/issue_registry.html', {'show_download_button': True})
