@@ -1,6 +1,7 @@
 import requests
 from django.shortcuts import render, redirect
 
+from issue_tracker.models import Registry
 from issue_tracker.utils import _extract_username_repository_name, _get_issues_data, _count_required_issues, \
     _render_error_page
 
@@ -42,4 +43,5 @@ def validate_url(request):
 
 
 def issue_registry(request):
-    return render(request, 'issue_tracker/issue_registry.html', {'show_download_button': True})
+    issues = Registry.objects.all()
+    return render(request, 'issue_tracker/issue_registry.html', {'show_download_button': True, 'issues': issues})

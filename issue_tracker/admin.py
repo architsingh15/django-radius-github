@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from issue_tracker.models import Registry
+
+
+class RegistryAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(Registry, RegistryAdmin)
