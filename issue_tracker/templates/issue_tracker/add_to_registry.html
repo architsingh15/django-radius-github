@@ -11,7 +11,13 @@
                 <button class="btn btn-primary btn-l" type="submit">
                   <i class="fas fa-arrow-right fa-sm"></i>
                 </button>
+<button class="btn btn-primary btn-l" type="submit" disabled>
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  <span class="sr-only">Loading...</span>
+</button>
               </div>
             </div>
           </form>
+{% endblock %}
+{% block scripts %}
 {% endblock %}

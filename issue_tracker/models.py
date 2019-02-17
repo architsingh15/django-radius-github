@@ -4,7 +4,6 @@ from django.db import models
 class Registry(models.Model):
     class Meta:
         verbose_name_plural = "Registry"
-        unique_together = ('repository_name', 'username',)
 
     def __str__(self):
         return self.repository_name
