@@ -1,3 +1,4 @@
+"""Helper functions to be used during backend processing"""
 import datetime
 
 import dateutil.parser
@@ -6,10 +7,12 @@ from django.template.response import TemplateResponse
 
 
 def _render_error_page(error_name_html, request):
+    """Renders a custom made error page"""
     return TemplateResponse(request, 'issue_tracker/errors/{}.html'.format(error_name_html))
 
 
 def _get_issues_data(username, repository_name):
+    """Makes the API call to GitHub API server for the issues data for the username and repository name"""
     issues_data = requests.get(
         'https://api.github.com/repos/{}/{}/issues?state=open'.format(username, repository_name)
     )
@@ -21,16 +24,19 @@ def _get_issues_data(username, repository_name):
 
 
 def _extract_username_repository_name(split_input_url):
+    """Extracts the username and the repository name of a valid GitHub URL"""
     repository_name = split_input_url[-1]
     username = split_input_url[-2]
     return username, repository_name
 
 
 def _subtract_number_of_days(now, days):
+    """Returns a date time object subtracting the number of days given in the argument"""
     return now - datetime.timedelta(days=days)
 
 
 def _count_required_issues(issues_dict):
+    """Returns a dictionary with the processed data that we need to display on Issue Registry"""
     issues_count_dict = dict.fromkeys(["total", "less_than_24_hours", "less_than_7_days", "more_than_7_days"], 0)
     if not issues_dict:
         return issues_count_dict

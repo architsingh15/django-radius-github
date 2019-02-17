@@ -1,3 +1,4 @@
+"""The URL configuration of the application"""
 from django.urls import path
 from django.views.generic import RedirectView
 

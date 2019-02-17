@@ -1,3 +1,4 @@
+"""This the test that runs when we provide the run_selenium_test command"""
 from selenium.webdriver.support import expected_conditions as EC
 
 from selenium import webdriver

@@ -1,3 +1,5 @@
+"""The backend processing that receives the request and handles the rendering of the templates with appropriate
+data and processing. It's the V in MVT"""
 import requests
 from django.shortcuts import render, redirect
 
@@ -5,15 +7,9 @@ from issue_tracker.models import Registry
 from issue_tracker.utils import _extract_username_repository_name, _get_issues_data, _count_required_issues, \
     _render_error_page
 
-# segregate the scripts and links according to the pages
-regex_ = '^(?:http)s?:\/\/(?:github\.com)\/[a-z]*\/[a-z]*$'
-
-# pass constants from view to template
-# add loading spinner in submit button
-
 
 def base(request):
-    return render(request, 'issue_tracker/base.html', {})
+    return render(request, 'issue_tracker/base.html')
 
 
 def add_to_registry(request):
@@ -55,6 +51,5 @@ def issue_registry(request):
     })
 
 
-# create a custom loading page
 def dashboard(request):
     return render(request, 'issue_tracker/dashboard.html')

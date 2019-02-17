@@ -1,3 +1,4 @@
+"""Stores the DB schema for the backend database"""
 from django.db import models
 
 
