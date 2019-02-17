@@ -32,6 +32,8 @@ def _subtract_number_of_days(now, days):
 
 def _count_required_issues(issues_dict):
     issues_count_dict = dict.fromkeys(["total", "less_than_24_hours", "less_than_7_days", "more_than_7_days"], 0)
+    if not issues_dict:
+        return issues_count_dict
     for dict_obj in issues_dict:
         issues_count_dict['total'] += 1
         issue_date = dict_obj['created_at']

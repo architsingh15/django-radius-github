@@ -40,7 +40,7 @@ def validate_url(request):
                 )
                 registry_obj.save()
 
-                return redirect('/add')
+                return redirect('/issue_registry')
             else:
                 return _render_error_page('invalid_github', request)
         else:

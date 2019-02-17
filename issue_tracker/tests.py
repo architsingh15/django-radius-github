@@ -1,5 +1,10 @@
-from django.test import TestCase
+from selenium.webdriver.support import expected_conditions as EC
 
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+
+"""The test data that needs to be run on the application"""
 test_data = [
     'https://github.com/mojombo/grit',
     'https://github.com/wycats/merb-core',
@@ -102,3 +107,32 @@ test_data = [
     'https://github.com/collectiveidea/clear_empty_attributes',
     'https://github.com/collectiveidea/css_naked_day'
                 ]
+
+# get path from settings.py
+
+
+def automated_test():
+    # Selenium web driver for opening the browser and running the automation tests
+    browser = webdriver.Chrome(
+        executable_path='/home/hasher/Desktop/django-radius-github/issue_tracker/drivers/chromedriver'
+    )
+
+    browser.get('http://localhost:8000/add')
+
+    for url in test_data:
+        # get the input element
+        element = WebDriverWait(browser, 10).until(
+            EC.presence_of_element_located((By.ID, "input_url"))
+        )
+        # clear the input element
+        element.clear()
+        # type the url in the input element
+        element.send_keys(url)
+        # click the submit button
+        input = browser.find_element_by_id('submit').click()
+        # after successful insertion of issue object in DB click on Add in Registry tab in sidebar
+        sidebar_tab_add = WebDriverWait(browser, 10).until(
+            EC.presence_of_element_located((By.ID, "add"))
+        ).click()
+
+    browser.quit()
