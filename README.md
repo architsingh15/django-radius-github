@@ -52,3 +52,12 @@ Steps to set it up locally
 8) ./manage.py runserver 
 9) ./manage.py run_selenium_test to run test
 
+DB schema in issue_tracker/models.py 
+
+Application Logic:
+1) The Add to Registry page will accept a valid GitHub Public URL
+2) On clicking submit the URL will be attached as payload to a POST request to an API named validate_url
+3) The API will validate the URL, parse for the username and repository_name, call the GitHub '/issues' API for the issues_data, process the data and save it in the DataBase
+4) Will redirect to the Issues Registry where all the data that has been stored in the DB is displayed 
+
+  
