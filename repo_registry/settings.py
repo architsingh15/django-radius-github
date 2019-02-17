@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import dj_database_url
 from decouple import config
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -74,17 +75,23 @@ WSGI_APPLICATION = 'repo_registry.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'github_repo',
-        'USER': 'archit',
-        'PASSWORD': 'github',
-        'HOST': 'localhost',
-        'PORT': '',
+if not DEBUG:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=config('DATABASE_URL')
+        )
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'github_repo',
+            'USER': 'archit',
+            'PASSWORD': 'github',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
 
 
 # Password validation
