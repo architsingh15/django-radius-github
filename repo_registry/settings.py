@@ -14,17 +14,16 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import dj_database_url
-from decouple import config
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = '-h*&3d4=@moopxu_ni)(nd=y&i70+j#^c8yke*0kt*2p)pwe--'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = False
 
 ALLOWED_HOSTS = ['github-issue-trackerrr.herokuapp.com']
 
@@ -77,7 +76,7 @@ WSGI_APPLICATION = 'repo_registry.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL')
+        default='postgres://dufmobocnbkega:1ff3e49fc2607a6f80c49b402c20b3f59b89ad344c583dcf7406da5d517eb83a@ec2-54-225-89-195.compute-1.amazonaws.com:5432/d5q0q4fuh19nht'
     )
 }
 
