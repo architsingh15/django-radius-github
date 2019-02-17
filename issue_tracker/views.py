@@ -11,16 +11,13 @@ regex_ = '^(?:http)s?:\/\/(?:github\.com)\/[a-z]*\/[a-z]*$'
 # pass constants from view to template
 # add loading spinner in submit button
 
+
 def base(request):
     return render(request, 'issue_tracker/base.html', {})
 
 
 def add_to_registry(request):
-    return render(
-        request,
-        'issue_tracker/add_to_registry.html',
-        {'show_download_button': True}
-    )
+    return render(request, 'issue_tracker/add_to_registry.html')
 
 
 def validate_url(request):
@@ -53,8 +50,10 @@ def validate_url(request):
 
 
 def issue_registry(request):
-    issues = Registry.objects.all()
-    return render(request, 'issue_tracker/issue_registry.html', {'show_download_button': True, 'issues': issues})
+    return render(request, 'issue_tracker/issue_registry.html', {
+        'issues': Registry.objects.all()
+    })
+
 
 # create a custom loading page
 def dashboard(request):

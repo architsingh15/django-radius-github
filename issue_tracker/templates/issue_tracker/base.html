@@ -37,7 +37,7 @@
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
+      <li class="nav-item" id="add">
         <a class="nav-link" href="/add">
           <i class="fas fa-plus"></i>
           <span>Add Repository</span></a>
@@ -45,7 +45,7 @@
 
 
       <!-- Nav Item - Tables -->
-      <li class="nav-item">
+      <li class="nav-item" id="issue_registry">
         <a class="nav-link" href="/issue_registry">
           <i class="fas fa-fw fa-table"></i>
           <span>Issue Registry</span></a>
@@ -66,9 +66,6 @@
         <div class="container-fluid">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{% block heading %}{% endblock %}</h1>
-            {% if show_download_button %}
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i>Download</a>
-            {% endif %}
           </div>
           {% block content %}{% endblock %}
         </div>
@@ -83,5 +80,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
   <script src='{% static "issue_tracker/js/issue_tracker.min.js" %}'></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script>
+  if (window.location.href.indexOf('add') > -1) {
+  add = document.getElementById("add");
+  add.classList.add("active");
+  }
+  else if (window.location.href.indexOf('issue_registry') > -1) {
+  issue_registry = document.getElementById("issue_registry");
+  issue_registry.classList.add("active");
+  }
+</script>
 {% block scripts %}{% endblock %}
 </html>
