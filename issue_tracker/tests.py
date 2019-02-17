@@ -128,9 +128,9 @@ def automated_test():
         executable_path='/home/hasher/Desktop/django-radius-github/issue_tracker/drivers/chromedriver'
     )
 
-    browser.get('http://localhost:8000/add')
+    browser.get('https://github-issue-trackerrr.herokuapp.com/add')
     new_test_data = test_data[:20]
-    for url in new_test_data:
+    for url in test_data:
         # get the input element
         element = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.ID, "input_url"))
