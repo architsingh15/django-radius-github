@@ -108,6 +108,16 @@ test_data = [
     'https://github.com/collectiveidea/css_naked_day'
                 ]
 
+private_test_data = [
+    'https://github.com/architsingh15/aruba_dashboard',
+    'https://github.com/architsingh15/hiway-web',
+    'https://github.com/architsingh15/anthe',
+    'https://github.com/architsingh15/fiduciary-ai',
+    'https://github.com/architsingh15/hiway-web-migrate',
+    'https://github.com/architsingh15/hiway',
+    'https://github.com/architsingh15/rdbtools-web',
+    'https://github.com/architsingh15/rdbtools-app'
+]
 # get path from settings.py
 
 
@@ -118,8 +128,8 @@ def automated_test():
     )
 
     browser.get('http://localhost:8000/add')
-
-    for url in test_data:
+    new_test_data = test_data[:20]
+    for url in new_test_data:
         # get the input element
         element = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.ID, "input_url"))
@@ -134,5 +144,24 @@ def automated_test():
         sidebar_tab_add = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.ID, "add"))
         ).click()
+
+    print("All public repositories test cases have passed")
+
+    for url in private_test_data:
+        # get the input element
+        element = WebDriverWait(browser, 10).until(
+            EC.presence_of_element_located((By.ID, "input_url"))
+        )
+        # clear the input element
+        element.clear()
+        # type the url in the input element
+        element.send_keys(url)
+        # click the submit button
+        input = browser.find_element_by_id('submit').click()
+        # after successful insertion of issue object in DB click on Add in Registry tab in sidebar
+        sidebar_tab_add = WebDriverWait(browser, 10).until(
+            EC.presence_of_element_located((By.ID, "add"))
+        ).click()
+    print("All private repositories test cases have passed")
 
     browser.quit()
