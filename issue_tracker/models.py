@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Registry(models.Model):
+    """
+    The DB schema for the registry model to store the issues data to be shown on Issue Registry page
+    """
     class Meta:
         verbose_name_plural = "Registry"
 

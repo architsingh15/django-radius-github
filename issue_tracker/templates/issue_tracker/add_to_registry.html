@@ -8,16 +8,10 @@
             <div class="input-group">
               <input type="url" id="input_url" name="input_url" class="form-control bg-light border-0 small" placeholder="Input Repository URL" aria-label="Add" aria-describedby="Add URL" data-validation="url" pattern="^(?:http)s?:\/\/(?:github\.com)\/[a-zA-Z0-9._-]*\/[a-zA-Z0-9._-]*$" oninvalid="setCustomValidity('Please input a valid GitHub URL')" onchange="try{setCustomValidity('')}catch(e){}" required autocomplete="off">
               <div class="input-group-append">
-                <button class="btn btn-primary btn-l" type="submit">
+                <button class="btn btn-primary btn-l" type="submit" id="submit">
                   <i class="fas fa-arrow-right fa-sm"></i>
                 </button>
-<button class="btn btn-primary btn-l" type="submit" disabled>
-  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-  <span class="sr-only">Loading...</span>
-</button>
               </div>
             </div>
           </form>
-{% endblock %}
-{% block scripts %}
 {% endblock %}
