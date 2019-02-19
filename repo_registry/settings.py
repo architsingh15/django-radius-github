@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-h*&3d4=@moopxu_ni)(nd=y&i70+j#^c8yke*0kt*2p)pwe--'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['github-issue-trackerrr.herokuapp.com', 'localhost']
 

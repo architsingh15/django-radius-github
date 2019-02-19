@@ -20,9 +20,9 @@ def _get_issues_data(username, repository_name):
     paginated_link_info = issues_data.headers['link']
     last_page_index = re.findall(r'\d+', paginated_link_info)[-1]
     payload = list()
-    for index in range(1, int(last_page_index + 1)):
+    for index in range(1, int(last_page_index) + 1):
         issues_data = requests.get(
-            'https://api.github.com/repos/{}/{}/issues?page={}&state=open'.format(username, repository_name, index)
+            'https://api.github.com/repos/{}/{}/issues?page={}&state=open&per_page=100'.format(username, repository_name, str(index))
         )
         if issues_data:
             data = issues_data.json()
