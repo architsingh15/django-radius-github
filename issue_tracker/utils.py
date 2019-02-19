@@ -1,5 +1,6 @@
 """Helper functions to be used during backend processing"""
 import datetime
+import re
 
 import dateutil.parser
 import requests
@@ -16,11 +17,17 @@ def _get_issues_data(username, repository_name):
     issues_data = requests.get(
         'https://api.github.com/repos/{}/{}/issues?state=open'.format(username, repository_name)
     )
-    if issues_data:
-        data = issues_data.json()
-        return data
-    else:
-        return None
+    paginated_link_info = issues_data.headers['link']
+    last_page_index = re.findall(r'\d+', paginated_link_info)[-1]
+    payload = list()
+    for index in range(1, int(last_page_index + 1)):
+        issues_data = requests.get(
+            'https://api.github.com/repos/{}/{}/issues?page={}&state=open'.format(username, repository_name, index)
+        )
+        if issues_data:
+            data = issues_data.json()
+            payload += data
+    return payload
 
 
 def _extract_username_repository_name(split_input_url):
@@ -41,22 +48,23 @@ def _count_required_issues(issues_dict):
     if not issues_dict:
         return issues_count_dict
     for dict_obj in issues_dict:
-        issues_count_dict['total'] += 1
-        issue_date = dict_obj['created_at']
-        issue_date = issue_date.strip('Z')
-        issue_date_datetime = dateutil.parser.parse(issue_date)
+        if 'pull_request' not in dict_obj:
+            issues_count_dict['total'] += 1
+            issue_date = dict_obj['created_at']
+            issue_date = issue_date.strip('Z')
+            issue_date_datetime = dateutil.parser.parse(issue_date)
 
-        now = datetime.datetime.today().replace(microsecond=0)
-        one_day_ago = _subtract_number_of_days(now, 1)
-        seven_days_ago = _subtract_number_of_days(now, 7)
+            now = datetime.datetime.today().replace(microsecond=0)
+            one_day_ago = _subtract_number_of_days(now, 1)
+            seven_days_ago = _subtract_number_of_days(now, 7)
 
-        if one_day_ago < issue_date_datetime < now:
-            issues_count_dict['less_than_24_hours'] += 1
-        elif seven_days_ago < issue_date_datetime < one_day_ago:
-            issues_count_dict['less_than_7_days'] += 1
-        elif issue_date_datetime < seven_days_ago:
-            issues_count_dict['more_than_7_days'] += 1
-        else:
-            pass
+            if one_day_ago < issue_date_datetime < now:
+                issues_count_dict['less_than_24_hours'] += 1
+            elif seven_days_ago < issue_date_datetime < one_day_ago:
+                issues_count_dict['less_than_7_days'] += 1
+            elif issue_date_datetime < seven_days_ago:
+                issues_count_dict['more_than_7_days'] += 1
+            else:
+                pass
     return issues_count_dict
 
