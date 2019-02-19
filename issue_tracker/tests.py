@@ -122,14 +122,14 @@ private_test_data = [
 # get path from settings.py
 
 
-def automated_test():
+def automated_test(url):
     # Selenium web driver for opening the browser and running the automation tests
     browser = webdriver.Chrome(
         executable_path='/home/hasher/Desktop/django-radius-github/issue_tracker/drivers/chromedriver'
     )
 
-    browser.get('https://github-issue-trackerrr.herokuapp.com/add')
-    for url in test_data:
+    browser.get(url)
+    for url_ in test_data:
         # get the input element
         element = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.ID, "input_url"))
@@ -137,7 +137,7 @@ def automated_test():
         # clear the input element
         element.clear()
         # type the url in the input element
-        element.send_keys(url)
+        element.send_keys(url_)
         # click the submit button
         input = browser.find_element_by_id('submit').click()
         # after successful insertion of issue object in DB click on Add in Registry tab in sidebar
@@ -147,7 +147,7 @@ def automated_test():
 
     print("All public repositories test cases have passed")
 
-    for url in private_test_data:
+    for url_ in private_test_data:
         # get the input element
         element = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.ID, "input_url"))
@@ -155,7 +155,7 @@ def automated_test():
         # clear the input element
         element.clear()
         # type the url in the input element
-        element.send_keys(url)
+        element.send_keys(url_)
         # click the submit button
         input = browser.find_element_by_id('submit').click()
         # after successful insertion of issue object in DB click on Add in Registry tab in sidebar

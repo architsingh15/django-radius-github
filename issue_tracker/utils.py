@@ -15,19 +15,24 @@ def _render_error_page(error_name_html, request):
 def _get_issues_data(username, repository_name):
     """Makes the API call to GitHub API server for the issues data for the username and repository name"""
     issues_data = requests.get(
-        'https://api.github.com/repos/{}/{}/issues?state=open'.format(username, repository_name)
+        'https://api.github.com/repos/{}/{}/issues?state=open&page=2'.format(username, repository_name)
     )
-    paginated_link_info = issues_data.headers['link']
-    last_page_index = re.findall(r'\d+', paginated_link_info)[-1]
-    payload = list()
-    for index in range(1, int(last_page_index) + 1):
-        issues_data = requests.get(
-            'https://api.github.com/repos/{}/{}/issues?page={}&state=open&per_page=100'.format(username, repository_name, str(index))
-        )
-        if issues_data:
-            data = issues_data.json()
-            payload += data
-    return payload
+    if issues_data.status_code is 200:
+        paginated_link_info = issues_data.headers.get('link', None)
+        if paginated_link_info:
+            last_page_index = re.findall(r'\d+', paginated_link_info)[-1]
+        else:
+            return
+        payload = list()
+        for index in range(1, int(last_page_index) + 1):
+            if issues_data.status_code is 200:
+                issues_data = requests.get(
+                    'https://api.github.com/repos/{}/{}/issues?page={}&state=open&per_page=100'.format(username, repository_name, str(index))
+                )
+                if issues_data:
+                    data = issues_data.json()
+                    payload += data
+        return payload
 
 
 def _extract_username_repository_name(split_input_url):
