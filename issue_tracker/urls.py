@@ -1,4 +1,6 @@
-"""The URL configuration of the application"""
+"""The URL configuration of the application
+When the particular URL is hit it feeds the request to the corresponding view.
+"""
 from django.urls import path
 from django.views.generic import RedirectView
 

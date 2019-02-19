@@ -129,7 +129,6 @@ def automated_test():
     )
 
     browser.get('https://github-issue-trackerrr.herokuapp.com/add')
-    new_test_data = test_data[:20]
     for url in test_data:
         # get the input element
         element = WebDriverWait(browser, 10).until(

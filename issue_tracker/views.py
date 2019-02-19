@@ -1,5 +1,7 @@
 """The backend processing that receives the request and handles the rendering of the templates with appropriate
-data and processing. It's the V in MVT"""
+data and processing. It's the V in MVT
+Every view takes in the request parameter, and a html template path that needs to be rendered.
+"""
 import requests
 from django.shortcuts import render, redirect
 
@@ -9,14 +11,18 @@ from issue_tracker.utils import _extract_username_repository_name, _get_issues_d
 
 
 def base(request):
+    """The view that renders the base template"""
     return render(request, 'issue_tracker/base.html')
 
 
 def add_to_registry(request):
+    """The view that renders the add_to_registry page"""
     return render(request, 'issue_tracker/add_to_registry.html')
 
 
 def validate_url(request):
+    """The API that validates the input URL, gets the data from the GitHub API, extracts the meaningful data from it,
+    saves the Registry Object in the Database"""
     if request.method == 'POST':
         input_url = request.POST.get('input_url')
         resolvable_url = requests.get(input_url)
@@ -46,10 +52,12 @@ def validate_url(request):
 
 
 def issue_registry(request):
+    """This is the view that renders the issue registry table with all the data stored in the DB."""
     return render(request, 'issue_tracker/issue_registry.html', {
         'issues': Registry.objects.all()
     })
 
 
 def dashboard(request):
+    """This view renders the dashboard"""
     return render(request, 'issue_tracker/dashboard.html')
