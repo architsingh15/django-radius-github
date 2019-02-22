@@ -1,5 +1,4 @@
 from django.core.management.base import BaseCommand
-
 from issue_tracker.tests import automated_test
 
 

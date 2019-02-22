@@ -20,7 +20,8 @@ def _get_issues_data(username, repository_name):
     if issues_data.status_code is 200:
         paginated_link_info = issues_data.headers.get('link', None)
         if paginated_link_info:
-            last_page_index = re.findall(r'\d+', paginated_link_info)[-1]
+            last_page_index = paginated_link_info.index('last')
+            last_page_index = last_page_index - 8 if last_page_index else 0
         else:
             return
         payload = list()

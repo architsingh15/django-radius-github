@@ -19,7 +19,6 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '-h*&3d4=@moopxu_ni)(nd=y&i70+j#^c8yke*0kt*2p)pwe--'
 
 # SECURITY WARNING: don't run with debug turned on in production!

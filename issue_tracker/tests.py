@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
 """The test data that needs to be run on the application"""
-test_data = [
+public_test_data = [
     'https://github.com/mojombo/grit',
     'https://github.com/wycats/merb-core',
     'https://github.com/rubinius/rubinius',
@@ -119,6 +119,8 @@ private_test_data = [
     'https://github.com/architsingh15/rdbtools-web',
     'https://github.com/architsingh15/rdbtools-app'
 ]
+
+
 # get path from settings.py
 
 
@@ -129,7 +131,7 @@ def automated_test(url):
     )
 
     browser.get(url)
-    for url_ in test_data:
+    for url_ in public_test_data:
         # get the input element
         element = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.ID, "input_url"))
@@ -165,3 +167,4 @@ def automated_test(url):
     print("All private repositories test cases have passed")
 
     browser.quit()
+
