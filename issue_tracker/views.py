@@ -32,8 +32,6 @@ def validate_url(request):
                 username, repository_name = _extract_username_repository_name(split_input_url)
                 issues = _get_issues_data(username, repository_name)
                 required_count = _count_required_issues(issues)
-                print(issues)
-                print(required_count)
                 registry_obj = Registry(
                     username=username,
                     repository_name=repository_name,
