@@ -4,6 +4,7 @@ import re
 
 import dateutil.parser
 import requests
+from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
 
@@ -17,11 +18,19 @@ def _get_issues_data(username, repository_name):
     issues_data = requests.get(
         'https://api.github.com/repos/{}/{}/issues?state=open&page=2'.format(username, repository_name)
     )
+    print(issues_data.json())
     if issues_data.status_code is 200:
+        print(issues_data, '1')
         paginated_link_info = issues_data.headers.get('link', None)
+        print(paginated_link_info, '2')
         if paginated_link_info:
+            print(paginated_link_info, '3')
             last_page_index = paginated_link_info.index('last')
-            last_page_index = last_page_index - 8 if last_page_index else 0
+            print(last_page_index, '4')
+            last_page_index = last_page_index - 9 if last_page_index else 0
+            print(last_page_index, '5')
+            last_index = paginated_link_info[last_page_index]
+            print(last_index, '6')
         else:
             return
         payload = list()
@@ -33,6 +42,7 @@ def _get_issues_data(username, repository_name):
                 if issues_data:
                     data = issues_data.json()
                     payload += data
+        print(payload, '6')
         return payload
 
 

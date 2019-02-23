@@ -8,4 +8,4 @@ class Command(BaseCommand):
     production = 'https://github-issue-trackerrr.herokuapp.com/add'
 
     def handle(self, *args, **kwargs):
-        automated_test(self.production)
+        automated_test(self.localhost)

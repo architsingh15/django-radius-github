@@ -131,7 +131,7 @@ def automated_test(url):
     )
 
     browser.get(url)
-    for url_ in public_test_data:
+    for url_ in public_test_data[:10]:
         # get the input element
         element = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.ID, "input_url"))
