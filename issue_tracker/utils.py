@@ -9,6 +9,7 @@ from django.template.response import TemplateResponse
 
 auth_token = 'f819a77c821d2ed58b8caff812e7a860ea09988d'
 
+
 def _render_error_page(error_name_html, request):
     """Renders a custom made error page"""
     return TemplateResponse(request, 'issue_tracker/errors/{}.html'.format(error_name_html))
