@@ -31,7 +31,9 @@ def validate_url(request):
             if len(split_input_url) is 5:
                 username, repository_name = _extract_username_repository_name(split_input_url)
                 issues = _get_issues_data(username, repository_name)
+
                 required_count = _count_required_issues(issues)
+
                 registry_obj = Registry(
                     username=username,
                     repository_name=repository_name,
