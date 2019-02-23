@@ -7,8 +7,6 @@ import requests
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
-auth_token = 'f819a77c821d2ed58b8caff812e7a860ea09988d'
-
 
 def _render_error_page(error_name_html, request):
     """Renders a custom made error page"""
@@ -18,11 +16,13 @@ def _render_error_page(error_name_html, request):
 def _get_issues_data(username, repository_name):
     """Makes the API call to GitHub API server for the issues data for the username and repository name"""
     issues_data = requests.get(
-        'https://api.github.com/repos/{}/{}/issues?state=open&page=1&per_page=100&access_token={}'.format(username, repository_name, auth_token)
+        'https://api.github.com/repos/{}/{}/issues?state=open&page=1&per_page=100'.format(username, repository_name)
     )
+    print(issues_data.json())
     if issues_data.status_code is 200:
         last_index = 1
         paginated_link_info = issues_data.headers.get('Link', None)
+        print(paginated_link_info)
 
         if paginated_link_info:
             if paginated_link_info.find('last') > -1:
@@ -32,10 +32,10 @@ def _get_issues_data(username, repository_name):
                         splitted_list = element.split('&')
                         last_index = splitted_list[1].strip('page=')
         payload = list()
-
+        print(last_index)
         for index in range(1, int(last_index) + 1):
             issues_data = requests.get(
-                'https://api.github.com/repos/{}/{}/issues?per_page=100&page={}&access_token={}'.format(username, repository_name, str(index), auth_token)
+                'https://api.github.com/repos/{}/{}/issues?per_page=100&page={}'.format(username, repository_name, str(index))
             )
 
             if issues_data.status_code is 200:
